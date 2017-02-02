@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Wildtree.Models;
@@ -15,12 +11,31 @@ namespace Wildtree.Data
         {
         }
 
+        public DbSet<ApplicationRole> ApplicationRole { get; set; }
+        public DbSet<Workshop> Workshop { get; set; }
+        public DbSet<WorkshopBundle> WorkshopBundle { get; set; }
+        public DbSet<Bundle> Bundle { get; set; }
+        public DbSet<Meal> Meal { get; set; } 
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // Customize the ASP.NET Identity model and override the defaults if needed.
-            // For example, you can rename the ASP.NET Identity table names and more.
-            // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<Workshop>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            builder.Entity<WorkshopBundle>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
+            builder.Entity<Bundle>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            builder.Entity<Meal>()
+                .Property(b => b.DateCreated)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }
     }
 }
